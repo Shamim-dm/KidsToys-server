@@ -9,8 +9,6 @@ const port = process.env.PORT || 5000;
 app.use(cors())
 app.use(express.json())
 
-// toy-vehicles
-// LkV2gNDEWTcH7R6u
 
 
 
@@ -31,7 +29,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    // await client.connect();
+    // client.connect();
 
 const toysCollections = client.db('toy-vehicles').collection('products')
 
@@ -43,6 +41,15 @@ app.get('/products', async(req, res)=>{
     const result = await cursor.toArray()
     console.log(result)
     res.send(result)
+})
+
+
+app.get('/addProducts', async (req, res)=>{
+  const body = req.body;
+  console.log(body)
+  const result = await toysCollections.insertOne(body)
+  res.send(result)
+ 
 })
 
 
