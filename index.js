@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const app = express()
 const port = process.env.PORT || 5000;
@@ -29,28 +29,72 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    // client.connect();
+   await client.connect();
 
 const toysCollections = client.db('toy-vehicles').collection('products')
+const addProductsCollections = client.db('toy-vehicles').collection('addProducts')
 
 
 
-
+// get data from mongodb
 app.get('/products', async(req, res)=>{
     const cursor = toysCollections.find()
     const result = await cursor.toArray()
-    console.log(result)
+    // console.log(result)
     res.send(result)
 })
 
-
-app.get('/addProducts', async (req, res)=>{
-  const body = req.body;
-  console.log(body)
-  const result = await toysCollections.insertOne(body)
+// add data to mongodb
+app.post('/addProducts', async(req, res)=>{
+  const newCoffee = req.body;
+  console.log(newCoffee)
+  const result = await addProductsCollections.insertOne(newCoffee)
   res.send(result)
- 
 })
+
+app.get('/addProducts', async(req, res)=>{
+  const cursor = addProductsCollections.find()
+  const result = await cursor.toArray()
+  console.log(result)
+  res.send(result)
+})
+
+app.get('/addProducts/:id', async(req, res)=>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result = await toysCollections.findOne(query)
+  res.send(result)
+})
+
+
+// app.get('/addProducts', async (req, res)=>{
+//   const body = req.body;
+//   console.log(body)
+//   const result = await addProductsCollections.insertOne(body)
+//   res.send(result)
+ 
+// })
+
+// app.patch('/addProducts/:id', async(req, res)=>{
+//   const id = req.params.id;
+//   const filter = {_id: new ObjectId(id)}
+//   const updateBooking = req.body;
+//   const updateDoc = {
+//     $set: {
+//       status: updateBooking.status
+//     },
+//   };
+//  const result = await addProductsCollections.updateOne(filter, updateDoc)
+//  res.send(result)
+// })
+
+
+// app.delete('/addProducts/:id', async(req, res)=>{
+//   const id = req.params.id
+//   const query = {_id: new ObjectId(id)}
+//   const result = addProductsCollections.deleteOne(query)
+//   res.send(result)
+// })
 
 
 
