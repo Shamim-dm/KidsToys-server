@@ -66,6 +66,15 @@ app.get('/addProducts/:id', async(req, res)=>{
   res.send(result)
 })
 
+  // delete data from mongodb
+  app.delete('/addProducts/:id', async(req, res)=>{
+    const id = req.params.id
+    const query = {_id: new ObjectId(id)} 
+    const result = await addProductsCollections.deleteOne(query)
+    res.send(result)
+  })
+
+
 
 // app.get('/addProducts', async (req, res)=>{
 //   const body = req.body;
