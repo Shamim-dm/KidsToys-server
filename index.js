@@ -44,6 +44,13 @@ app.get('/products', async(req, res)=>{
     res.send(result)
 })
 
+app.get('/products/:id', async(req, res)=>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result = await toysCollections.findOne(query)
+  res.send(result)
+})
+
 // add data to mongodb
 app.post('/addProducts', async(req, res)=>{
   const newCoffee = req.body;
@@ -55,14 +62,27 @@ app.post('/addProducts', async(req, res)=>{
 app.get('/addProducts', async(req, res)=>{
   const cursor = addProductsCollections.find()
   const result = await cursor.toArray()
-  console.log(result)
+  // console.log(result)
   res.send(result)
 })
+
+
+app.get('/addProducts', async(req, res)=> {
+  console.log(req.query.email)
+  let query = {};
+  if(req.query?.email) {
+    query = {email: req.query.email}
+  }
+  const result = await addProductsCollections.find(query).toArray()
+  res.send(result)
+})
+
+
 
 app.get('/addProducts/:id', async(req, res)=>{
   const id = req.params.id;
   const query = {_id: new ObjectId(id)}
-  const result = await toysCollections.findOne(query)
+  const result = await addProductsCollections.findOne(query)
   res.send(result)
 })
 
@@ -72,6 +92,30 @@ app.get('/addProducts/:id', async(req, res)=>{
     const query = {_id: new ObjectId(id)} 
     const result = await addProductsCollections.deleteOne(query)
     res.send(result)
+  })
+
+  app.put('/addProducts/:id', async(req, res)=>{
+    const id = req.params.id;
+    const updateToy = req.body
+    const query = {_Id: new ObjectId(id)}
+    const option = {upsert: true}
+    const toys = {
+      $set: {
+        name: updateToy.name,
+        email: updateToy.email,
+        category: updateToy.category,
+        price: updateToy.price,
+        quantity: updateToy.quantity,
+        date: updateToy.date,
+        toy_name: updateToy.toy_name ,
+        discription: updateToy.discription ,   
+        rating: updateToy.rating ,
+      }
+    }
+    const result = await addProductsCollections.updateOne(query, toys, option)
+    console.log(result)
+    res.send(result)
+
   })
 
 
