@@ -67,15 +67,18 @@ app.get('/addProducts', async(req, res)=>{
 })
 
 
-// app.get('/addProducts', async(req, res)=> {
-//   console.log(req.query.email)
-//   let query = {};
-//   if(req.query?.email) {
-//     query = {email: req.query.email}
-//   }
-//   const result = await addProductsCollections.find(query).toArray()
-//   res.send(result)
-// })
+
+
+app.get('/toys/:email', async(req, res)=> {
+  console.log(req.params.email)
+  let query = {};
+  if(req.params?.email) {
+    query = {email: req.params.email}
+  }
+  const result = await addProductsCollections.find(query).toArray()
+  res.send(result)
+})
+
 
 
 
@@ -107,9 +110,10 @@ app.get('/addProducts/:id', async(req, res)=>{
         price: updateToy.price,
         quantity: updateToy.quantity,
         date: updateToy.date,
-        toy_name: updateToy.toy_name ,
+        title: updateToy.title ,
         discription: updateToy.discription ,   
         rating: updateToy.rating ,
+
       }
     }
     const result = await addProductsCollections.updateOne(query, toys, option)
