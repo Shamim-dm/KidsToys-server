@@ -67,7 +67,7 @@ app.get('/addProducts', async(req, res)=>{
 })
 
 
-// app.get('/addProducts/:email', async(req, res)=> {
+// app.get('/addProducts', async(req, res)=> {
 //   console.log(req.query.email)
 //   let query = {};
 //   if(req.query?.email) {
@@ -139,55 +139,7 @@ app.get('/addProducts/:id', async(req, res)=>{
 
 
 
-
-
-
-
-
-
-
-
-// app.get('/addProducts', async (req, res)=>{
-//   const body = req.body;
-//   console.log(body)
-//   const result = await addProductsCollections.insertOne(body)
-//   res.send(result)
  
-// })
-
-// app.patch('/addProducts/:id', async(req, res)=>{
-//   const id = req.params.id;
-//   const filter = {_id: new ObjectId(id)}
-//   const updateBooking = req.body;
-//   const updateDoc = {
-//     $set: {
-//       status: updateBooking.status
-//     },
-//   };
-//  const result = await addProductsCollections.updateOne(filter, updateDoc)
-//  res.send(result)
-// })
-
-
-// app.delete('/addProducts/:id', async(req, res)=>{
-//   const id = req.params.id
-//   const query = {_id: new ObjectId(id)}
-//   const result = addProductsCollections.deleteOne(query)
-//   res.send(result)
-// })
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
