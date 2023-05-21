@@ -35,6 +35,11 @@ const toysCollections = client.db('toy-vehicles').collection('products')
 const addProductsCollections = client.db('toy-vehicles').collection('addProducts')
 
 
+// const indexKeys = { title: 1, category: 1}; // Replace field1 and field2 with your actual field names
+// const indexOptions = { name: "titleCategory" }; // Replace index_name with the desired index name
+// const result = await addProductsCollections.createIndex(indexKeys, indexOptions);
+// console.log(result);
+
 
 // get data from mongodb
 app.get('/products', async(req, res)=>{
@@ -78,6 +83,22 @@ app.get('/toys/:email', async(req, res)=> {
   const result = await addProductsCollections.find(query).toArray()
   res.send(result)
 })
+
+
+
+
+// app.get("/getJobsByText/:text", async (req, res) => {
+//   const text = req.params.text;
+//   const result = await addProductsCollections
+//     .find({
+//       $or: [
+//         { title: { $regex: text, $options: "i" } },
+//         { category: { $regex: text, $options: "i" } },
+//       ],
+//     })
+//     .toArray();
+//   res.send(result);
+// });
 
 
 
