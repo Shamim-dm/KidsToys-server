@@ -29,7 +29,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-   await client.connect();
+  //  await client.connect();
 
 const toysCollections = client.db('toy-vehicles').collection('products')
 const addProductsCollections = client.db('toy-vehicles').collection('addProducts')
@@ -51,31 +51,31 @@ app.get('/products/:id', async(req, res)=>{
   res.send(result)
 })
 
+
 // add data to mongodb
 app.post('/addProducts', async(req, res)=>{
-  const newCoffee = req.body;
-  console.log(newCoffee)
-  const result = await addProductsCollections.insertOne(newCoffee)
+  const newToys = req.body;
+  const result = await addProductsCollections.insertOne(newToys)
   res.send(result)
 })
 
 app.get('/addProducts', async(req, res)=>{
-  const cursor = addProductsCollections.find()
+  const cursor = addProductsCollections.find().limit(20)
   const result = await cursor.toArray()
   // console.log(result)
   res.send(result)
 })
 
 
-app.get('/addProducts', async(req, res)=> {
-  console.log(req.query.email)
-  let query = {};
-  if(req.query?.email) {
-    query = {email: req.query.email}
-  }
-  const result = await addProductsCollections.find(query).toArray()
-  res.send(result)
-})
+// app.get('/addProducts/:email', async(req, res)=> {
+//   console.log(req.query.email)
+//   let query = {};
+//   if(req.query?.email) {
+//     query = {email: req.query.email}
+//   }
+//   const result = await addProductsCollections.find(query).toArray()
+//   res.send(result)
+// })
 
 
 
@@ -117,6 +117,33 @@ app.get('/addProducts/:id', async(req, res)=>{
     res.send(result)
 
   })
+
+
+
+
+
+
+  // app.get("/getJobsByText/:text", async (req, res) => {
+  //   const text = req.params.text;
+  //   const result = await addProductsCollections
+  //     .find({
+  //       $or: [
+  //         { title: { $regex: text, $options: "i" } },
+  //         { category: { $regex: text, $options: "i" } },
+  //       ],
+  //     })
+  //     .toArray();
+  //   res.send(result);
+  // });
+
+
+
+
+
+
+
+
+
 
 
 
