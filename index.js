@@ -71,6 +71,21 @@ app.get('/addProducts', async(req, res)=>{
   res.send(result)
 })
 
+app.get('/assecnding', async(req, res)=>{
+  const result = await addProductsCollections.find().sort({ price : 1}).toArray()
+res.send(result)
+})
+
+app.get('/deccending', async(req, res)=>{
+  const result = await addProductsCollections.find().sort({price: -1}).toArray()
+  res.send(result)
+})
+
+
+
+
+
+
 
 
 
@@ -81,6 +96,27 @@ app.get('/toys/:email', async(req, res)=> {
     query = {email: req.params.email}
   }
   const result = await addProductsCollections.find(query).toArray()
+  res.send(result)
+})
+
+
+app.get('/mytoysacc/:email', async(req, res)=> {
+  console.log(req.params.email)
+  let query = {};
+  if(req.params?.email) {
+    query = {email: req.params.email}
+  }
+  const result = await addProductsCollections.find(query).sort({price: 1}).toArray()
+  res.send(result)
+})
+
+app.get('/mytoysdcc/:email', async(req, res)=> {
+  console.log(req.params.email)
+  let query = {};
+  if(req.params?.email) {
+    query = {email: req.params.email}
+  }
+  const result = await addProductsCollections.find(query).sort({price: -1}).toArray()
   res.send(result)
 })
 
